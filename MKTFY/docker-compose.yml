@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  mktfy.api:
+    image: ${DOCKER_REGISTRY-}mktfyapi
+    container_name: "MKTFY.api"
+    build:
+      context: .
+      dockerfile: MKTFY.api/Dockerfile
+    ports: 
+       - "35030:80"
+       - "35031:443"
+    environment:
+      - Auth0__Domain=https://mktfylex.us.auth0.com
+      - Auth0__Audience=http://MKTFY.com
+      - Auth0__TokenRedirectUrl=http://localhost:35030
+    depends_on:
+      - MKTFY.db
+
+  MKTFY.db:
+    restart: on-failure
+    image: "postgis/postgis:14-3.1-alpine"
+    container_name: "MKTFY.db"
+    environment:
+      - POSTGRES_USER=devdbuser
+      - POSTGRES_DB=devdb
+      - POSTGRES_PASSWORD=devdbpassword
+    volumes:
+      - MKTFY-db:/var/lib/postgresql/data
+    ports:
+      - "35035:5432"
+
+volumes:
+    MKTFY-db:
