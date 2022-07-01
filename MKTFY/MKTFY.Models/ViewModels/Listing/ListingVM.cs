@@ -46,7 +46,7 @@ namespace MKTFY.Models.ViewModels.Listing
 
         public string City { get; set; } = String.Empty;
 
-        public string UserId { get; set; }
+        public string UserId { get; set; } = String.Empty;
 
     }
 }
