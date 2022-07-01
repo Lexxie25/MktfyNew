@@ -15,7 +15,7 @@ namespace MKTFY.Models.Entities
         {
         }
 
-        //constructor used to creat a new listing from listingAddVM model
+        //constructor used to create a new listing from listingAddVM model
         public Listing(ListingAddVM src, string userId)
         {
             Title = src.Title;
