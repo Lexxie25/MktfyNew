@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="3.7.9.21" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MKTFY.Models\MKTFY.Models.csproj" />
     <ProjectReference Include="..\MKTFY.Repositories\MKTFY.Repositories.csproj" />
   </ItemGroup>

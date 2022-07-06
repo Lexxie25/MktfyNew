@@ -38,6 +38,19 @@ namespace MKTFY.Repositories
             }
         }
 
+        private IUploadRepository _uploadRepository;
+
+        public IUploadRepository Uploads
+        {
+            get
+            {
+                if (_uploadRepository == null)
+                    _uploadRepository = new UploadRepository(_context);
+
+                return _uploadRepository;
+            }
+        }
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public UnitOfWork(ApplicationDbContext context)
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

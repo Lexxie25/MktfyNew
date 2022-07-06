@@ -20,7 +20,15 @@ namespace MKTFY.api.Controllers
             _listingService = listingService;
         }
 
-        //create a new Listing 
+
+        /// <summary>
+        /// Creating a New Listing 
+        /// </summary>
+        /// <param name="data">Listing Data</param>
+        /// <returns>Returns a Listing with ID </returns>
+        /// <response code = "200">Created A Listing</response>
+        /// <response code = "401">Not Currently Logged in</response>
+        /// <response code = "500">Database issue</response>
         [HttpPost]
 
         public async Task<ActionResult<ListingVM>> Create([FromBody] ListingAddVM data)
@@ -47,8 +55,10 @@ namespace MKTFY.api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        // get all listings 
+        /// <summary>
+        /// Get all Listings 
+        /// </summary>
+        /// <returns>Get all Listings </returns>
         [HttpGet]
 
         public async Task<ActionResult<List<ListingVM>>> GetAll()

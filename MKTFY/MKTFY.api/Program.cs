@@ -3,6 +3,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using MKTFY.api.Swashbuckle;
 using MKTFY.Repositories;
 using MKTFY.Services.Services;
 using MKTFY.Services.Services.Interfaces;
@@ -43,12 +45,32 @@ void ConfigureServices(WebApplicationBuilder builder)
 
         });
 
+    //Add Swagger generator to creat JSON documentaition content
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo { Title = "MKTFY API", Version = "v1" });
+        var apiXmlFilename = Path.Combine(AppContext.BaseDirectory, "MKTFY.api.xml");
+        var modelsXmlFilename = Path.Combine(AppContext.BaseDirectory, "MKTFY.Models.xml");
+        options.IncludeXmlComments(apiXmlFilename);
+        options.IncludeXmlComments(modelsXmlFilename);
+
+        options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http,
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Scheme = "bearer"
+        });
+        options.OperationFilter<AuthHeaderOperationFilter>();
+    });
+
     builder.Services.AddControllers();
 
     //Setup dependency Injection
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IListingService, ListingService>();
     builder.Services.AddScoped<IUserService, UserService>();
+    builder.Services.AddScoped<IUploadService, UploadService>();
 }
 
 // Setup out HTTP request/response pipeline
@@ -61,6 +83,16 @@ void ConfigurePipeline(WebApplication app)
     {
         app.UseDefaultFiles();
         app.UseStaticFiles();
+
+        //Make Swagger Json File avalible 
+        app.UseSwagger();
+
+        // Make Swagger UI available at /swagger
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "MKTFY API v1");
+        });
+
     }
 
     // If we get to admin panel to block user we would build a spot in here app.BlockedUser() not this exact code but something like this 
