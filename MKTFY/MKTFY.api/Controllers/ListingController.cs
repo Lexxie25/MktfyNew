@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MKTFY.api.Helpers;
 using MKTFY.Models.ViewModels.Listing;
 using MKTFY.Services.Services.Interfaces;
+using MKTFY.Shared.Exceptions;
 
 namespace MKTFY.api.Controllers
 {
@@ -33,66 +34,46 @@ namespace MKTFY.api.Controllers
 
         public async Task<ActionResult<ListingVM>> Create([FromBody] ListingAddVM data)
         {
-            try
-            {
-                var userId = User.GetId();
-                if (userId == null)
-                    return BadRequest("Invalid user");
 
-                // Have the service creat the new Listing 
-                var result = await _listingService.Create(data, userId);
+            var userId = User.GetId();
+            if (userId == null)
+                return BadRequest("Invalid user");
 
-                // return a 200 response with the ListingVM
-                return Ok(result);
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+            // Have the service creat the new Listing 
+            var result = await _listingService.Create(data, userId);
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            // return a 200 response with the ListingVM
+            return Ok(result);
+
         }
         /// <summary>
         /// Get all Listings 
         /// </summary>
         /// <returns>Get all Listings </returns>
-        [HttpGet]
+        [HttpGet]  // need to add not by user that is currently logged in 
 
-        public async Task<ActionResult<List<ListingVM>>> GetAll()
+        public async Task<ActionResult<List<ListingVM>>> GetAll(string userId)
         {
-            try
-            {
-                //Get the Listing entitiy from the srevice 
-                var result = await _listingService.GetAll();
 
-                // return a 200 response with the ListingVM
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
-            }
+            //Get the Listing entitiy from the srevice 
+            var result = await _listingService.GetAll(string userId);
+
+            // return a 200 response with the ListingVM
+            return Ok(result);
+
         }
         // get a specific Listing By id
         [HttpGet("{id}")]
 
         public async Task<ActionResult<ListingVM>> Get([FromRoute] Guid id)
         {
-            try
-            {
-                // get the requested Listing entity from the service 
-                var results = await _listingService.GetById(id);
 
-                // return a 200 response with the ListingVM
-                return Ok(results);
-            }
-            catch
-            {
-                return BadRequest(new { messasge = "Unable to retreve the requested Listing" });
-            }
+            // get the requested Listing entity from the service 
+            var results = await _listingService.GetById(id);
+
+            // return a 200 response with the ListingVM
+            return Ok(results);
+
         }
 
         //update the Listing
@@ -100,22 +81,13 @@ namespace MKTFY.api.Controllers
 
         public async Task<ActionResult<ListingVM>> Update([FromBody] ListingUpdateVM data)
         {
-            try
-            {
-                // Update a listing entity from the server 
-                var result = await _listingService.Update(data);
 
-                // return a 200 response with the ListingVM
-                return Ok(result);
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            // Update a listing entity from the server 
+            var result = await _listingService.Update(data);
+
+            // return a 200 response with the ListingVM
+            return Ok(result);
+
         }
 
 
@@ -124,23 +96,19 @@ namespace MKTFY.api.Controllers
 
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
-            try
-            {
-                // tell the repository to delete the requested Listing 
-                await _listingService.Delete(id);
+            // tell the repository to delete the requested Listing 
+            await _listingService.Delete(id);
 
-                // return a 200 response with the ListingVM
-                return Ok();
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
-            }
-            catch
-            {
-                return BadRequest(new { message = "Unable to delete the reequested Listing " });
-            }
+            // return a 200 response with the ListingVM
+            return Ok();
+
         }
 
     }
 }
+// Get listing all {city} filters all listings by city and not by user 
+//Get listing all {category} filters all listing by category and not by user 
+// Get Listing search/{searchstring} name and description fields nor user
+// get listing/Filter/ for searching with city andor catefory  or search with no filters not user 
+// get listing/deals 16 listings from lowest price to highest price and not from user
+// put listing purchase making a listing that will set the user id as a buyers id and update the database 

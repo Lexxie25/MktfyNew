@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MKTFY.api.Middleware;
 using MKTFY.api.Swashbuckle;
 using MKTFY.Repositories;
 using MKTFY.Services.Services;
@@ -65,6 +66,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     });
 
     builder.Services.AddControllers();
+    builder.Services.AddCors();
 
     //Setup dependency Injection
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -96,6 +98,7 @@ void ConfigurePipeline(WebApplication app)
     }
 
     // If we get to admin panel to block user we would build a spot in here app.BlockedUser() not this exact code but something like this 
+    app.UseMiddleware<GlobalExceptionHandler>();
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();

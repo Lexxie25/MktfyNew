@@ -36,10 +36,10 @@ namespace MKTFY.Services.Services
 
 
         }
-        public async Task<List<ListingVM>> GetAll()
+        public async Task<List<ListingVM>> GetAll(string userId)
         {
             // get the listing entities from the repository 
-            var results = await _uow.Listings.GetAll();
+            var results = await _uow.Listings.GetAll(string userId);
 
             //Build the ListingVM viwe models to return to the client 
             var models = results.Select(listing => new ListingVM(listing)).ToList();
@@ -95,5 +95,13 @@ namespace MKTFY.Services.Services
             await _uow.SaveAsync();
         }
 
+        //deals 
+
+        public async Task<List<ListingVM>> Deals(string userId)
+        {
+            var results = await _uow.Listings.Deals(userId);
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            return models;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MKTFY.Models.Entities;
 using MKTFY.Repositories.Repositories.Interfaces;
+using MKTFY.Shared.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,9 @@ namespace MKTFY.Repositories.Repositories
         public async Task<Listing> GetById(Guid id)
         {
             // get the entity 
-            var result = await _context.Listings.FirstAsync(Listing => Listing.Id == id);
+            var result = await _context.Listings.FirstOrDefaultAsync(Listing => Listing.Id == id);
+            if (result == null)
+                throw new NotFoundException("The requested listing could not be found");
 
             // return the retrieved entity
             return result;
@@ -62,6 +65,14 @@ namespace MKTFY.Repositories.Repositories
         {
             // deleting the entitiy 
             _context.Remove(entity);
+        }
+
+        //Deals 
+        public async Task<List<Listing>> Deals(string userId)
+        {
+            var results = await _context.Listings.Where(i => i.UserId != userId).OrderBy(i => i.Price).Take(16)
+                .ToListAsync();
+            return results;
         }
     }
 }

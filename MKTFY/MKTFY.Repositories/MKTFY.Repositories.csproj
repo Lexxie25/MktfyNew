@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MKTFY.Models\MKTFY.Models.csproj" />
+    <ProjectReference Include="..\MKTFY.Shaired\MKTFY.Shared.csproj" />
   </ItemGroup>
 
 </Project>
