@@ -66,7 +66,10 @@ void ConfigureServices(WebApplicationBuilder builder)
     });
 
     builder.Services.AddControllers();
-    builder.Services.AddCors();
+    builder.Services.AddCors(p => p.AddPolicy("CorsPolicy", build =>
+    {
+        build.WithOrigins("http://localhost:3001", "http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+    }));
 
     //Setup dependency Injection
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -96,6 +99,7 @@ void ConfigurePipeline(WebApplication app)
         });
 
     }
+    app.UseCors("CorsPolicy");
 
     // If we get to admin panel to block user we would build a spot in here app.BlockedUser() not this exact code but something like this 
     app.UseMiddleware<GlobalExceptionHandler>();
