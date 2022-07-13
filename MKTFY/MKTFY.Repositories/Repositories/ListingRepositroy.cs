@@ -25,7 +25,7 @@ namespace MKTFY.Repositories.Repositories
         {
             //add the created date
             entity.Created = DateTime.UtcNow;
-            entity.Status = "Active";
+            //entity.Status = "Active";
 
             // perform the add in memory
             _context.Add(entity);
@@ -43,7 +43,7 @@ namespace MKTFY.Repositories.Repositories
             return result;
         }
 
-        // get all the games .Where(i => i.UserId != userId && i.BuyerId == null).OrderByDescending(i => i.Created).
+        // get all the Listings string userId .Where(i => i.UserId != userId && i.BuyerId == null).OrderByDescending(i => i.Created).
         public async Task<List<Listing>> GetAll()
         {
             // get all the entities 
@@ -67,49 +67,52 @@ namespace MKTFY.Repositories.Repositories
             // deleting the entitiy 
             _context.Remove(entity);
         }
+        //////////////////////////////////////////////////////////////////
+        ///////////////////MOVING LOGIC INTO SERVICES NOT REPOSITORY ////////////
 
-        //Deals 
-        public async Task<List<Listing>> Deals(string userId)
-        {
-            var results = await _context.Listings.Where(i => i.UserId != userId).OrderBy(i => i.Price).Take(16)
-                .ToListAsync();
-            return results;
-        }
+        ////Deals 
+        //public async Task<List<Listing>> Deals(string userId)
+        //{
+        //    var results = await _context.Listings.Where(i => i.UserId != userId).OrderBy(i => i.Price).Take(16)
+        //        .ToListAsync();
+        //    return results;
+        //}
 
-        // Search  by title and description 
-        public async Task<List<Listing>> Search(string searchString, string userId)//string[] history)
-        {
+        //// Search  by title and description 
+        //public async Task<List<Listing>> Search(string searchString, string userId)//string[] history)
+        //{
 
-            var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null && (
-             i.Title.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower()))).OrderByDescending(i => i.Created).ToListAsync();
-            return results;
+        //    var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null && (
+        //     i.Title.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower()))).OrderByDescending(i => i.Created).ToListAsync();
+        //    return results;
 
-        }
+        //}
 
-        // search by city 
-        public async Task<List<Listing>> GetAllByCity(string city, string userId)
-        {
-            var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null &&
-            i.City == city).OrderByDescending(i => i.Created).ToListAsync();
-            return results;
+        //// search by city 
+        //public async Task<List<Listing>> GetAllByCity(string city, string userId)
+        //{
+        //    var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null &&
+        //    i.City == city).OrderByDescending(i => i.Created).ToListAsync();
+        //    return results;
 
-        }
-        // search by category 
-        public async Task<List<Listing>> GetAllByCategory(string category, string userId)
-        {
-            var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null &&
-            i.Category == category).OrderByDescending(i => i.Created).ToListAsync();
-            return results;
+        //}
+        //// search by category 
+        //public async Task<List<Listing>> GetAllByCategory(string category, string userId)
+        //{
+        //    var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null &&
+        //    i.Category == category).OrderByDescending(i => i.Created).ToListAsync();
+        //    return results;
 
-        }
+        //}
 
-        //Purchase 
-        public void Purchase(Listing entity)
-        {
-            entity.Purchase = DateTime.UtcNow;
+        //taken out for now did not do a migration yet throwing errors 
+        ////Purchase 
+        //public void Purchase(Listing entity)
+        //{
+        //    entity.Purchase = DateTime.UtcNow;
 
-            _context.Update(entity);
-        }
+        //    _context.Update(entity);
+        //}
 
         // MY LISTINGS ACTIVE AND SOLD 
         // MY History 

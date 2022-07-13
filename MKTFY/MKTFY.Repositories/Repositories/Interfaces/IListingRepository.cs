@@ -14,11 +14,12 @@ namespace MKTFY.Repositories.Repositories.Interfaces
         Task<List<Listing>> GetAll();   // get all of the listings string userId
         void Update(Listing entity);  // update the listing 
         void Delete(Listing entity);  // delete a litsing
-        Task<List<Listing>> Search(string searchString, string userId);
-        void Purchase(Listing entity); // updates the listing to purchased 
-        Task<List<Listing>> GetAllByCity(string city, string userId);
-        Task<List<Listing>> GetAllByCategory(string category, string userId);
-        Task<List<Listing>> Deals(string userId);
 
+        //void Purchase(Listing entity);//taken out for now did not do a migration yet throwing errors 
+
+
+
+
+        //this is going BUYBUY 
     }
 }

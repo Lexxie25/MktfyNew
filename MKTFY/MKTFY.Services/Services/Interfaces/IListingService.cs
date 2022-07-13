@@ -9,7 +9,7 @@ namespace MKTFY.Services.Services.Interfaces
 {
     public interface IListingService
     {
-        Task<ListingVM> Create(ListingAddVM src, string userId); // create a new listing 
+        Task<ListingVM> Create(ListingAddVM src, string userId); // create a new listing     
 
         Task<ListingVM> GetById(Guid id);        // get a single listing by id
 
@@ -19,15 +19,9 @@ namespace MKTFY.Services.Services.Interfaces
 
         Task Delete(Guid id);               // delete a game 
 
-        Task<List<ListingVM>> Deals(string userId);
+        //Task<ListingVM> Purchase(ListingPurchaseVM src, string buyerId); //taken out for now did not do a migration yet throwing errors 
 
-        Task<List<ListingVM>> Search(string searchString, string userId);
-
-        Task<ListingVM> Purchase(ListingPurchaseVM src, string buyerId);
-
-        Task<List<ListingVM>> GetAllByCity(string city, string userId);
-
-        Task<List<ListingVM>> GetAllByCategory(string category, string userId);
+        // This is Going BUYBUY 
 
     }
 }

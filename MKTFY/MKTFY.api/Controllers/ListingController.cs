@@ -58,7 +58,11 @@ namespace MKTFY.api.Controllers
         /// Get all Listings 
         /// </summary>
         /// <returns>Get all Listings </returns>
+<<<<<<< HEAD
         [HttpGet]  // need to add not by user that is currently logged in userId/// string userId
+=======
+        [HttpGet]  // need to add not by user that is currently logged in userId/// userId string userId
+>>>>>>> deals
 
         public async Task<ActionResult<List<ListingVM>>> GetAll()
         {
@@ -123,81 +127,82 @@ namespace MKTFY.api.Controllers
             return Ok();
 
         }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////Need to get logic working for others before implementing these// 
+        ///// <summary>
+        ///// Search string 
+        ///// </summary>
+        ///// <param name="searchString"></param>
+        ///// <returns></returns>
+        //[HttpGet("search/{searhString}")]
+        //public async Task<ActionResult<List<ListingVM>>> Search(string searchString)
+        //{
+        //    var userId = User.GetId();
+        //    if (userId == null)
+        //        return BadRequest("Invalid user");
 
-        /// <summary>
-        /// Search string 
-        /// </summary>
-        /// <param name="searchString"></param>
-        /// <returns></returns>
-        [HttpGet("search/{searhString}")]
-        public async Task<ActionResult<List<ListingVM>>> Search(string searchString)
-        {
-            var userId = User.GetId();
-            if (userId == null)
-                return BadRequest("Invalid user");
+        //    var results = await _listingService.Search(searchString, userId);
+        //    return Ok(results);
+        //}
+        //taken out for now did not do a migration yet throwing errors 
+        ///// <summary>
+        ///// when purchesed listing is actavated will assing the user id that is logged into the buyer id 
+        ///// </summary>
+        ///// <param name="data"></param>
+        ///// <returns></returns>
+        //[HttpPut("purchase")]
+        //public async Task<ActionResult<ListingVM>> Purchase([FromBody] ListingPurchaseVM data)
+        //{
+        //    var buyerId = User.GetId();
+        //    if (buyerId == null)
+        //        return BadRequest("Invalad User");
 
-            var results = await _listingService.Search(searchString, userId);
-            return Ok(results);
-        }
-
-        /// <summary>
-        /// when purchesed listing is actavated will asing the user id tha tis logged into the buyer id 
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        [HttpPut("purchase")]
-        public async Task<ActionResult<ListingVM>> Purchase([FromBody] ListingPurchaseVM data)
-        {
-            var buyerId = User.GetId();
-            if (buyerId == null)
-                return BadRequest("Invalad User");
-
-            // Update the Listing 
-            var result = await _listingService.Purchase(data, buyerId);
-            return Ok(result);
-        }
-
-
-        /// <summary>
-        /// city controller 
-        /// </summary>
-        /// <param name="city"></param>
-        /// <returns></returns>
-        [HttpGet("all/{city}")]
-        public async Task<ActionResult<ListingVM>> GetAllByCity(string city)
-        {
-            var userId = User.GetId();
-            if (userId == null)
-                return BadRequest("Invalad User");
-
-            //Get the Listing entitiy from the srevice 
-            var result = await _listingService.GetAllByCity(city, userId);
-
-            // return a 200 response with the ListingVM
-            return Ok(result);
-
-        }
+        //    // Update the Listing 
+        //    var result = await _listingService.Purchase(data, buyerId);
+        //    return Ok(result);
+        //}
 
 
-        /// <summary>
-        /// category controller 
-        /// </summary>
-        /// <param name="category"></param>
-        /// <returns></returns>
-        [HttpGet("all/{category}")]
-        public async Task<ActionResult<ListingVM>> GetAllByCategory(string category)
-        {
-            var userId = User.GetId();
-            if (userId == null)
-                return BadRequest("Invalad User");
+        ///// <summary>
+        ///// city controller 
+        ///// </summary>
+        ///// <param name="city"></param>
+        ///// <returns></returns>
+        //[HttpGet("all/{city}")]
+        //public async Task<ActionResult<ListingVM>> GetAllByCity(string city)
+        //{
+        //    var userId = User.GetId();
+        //    if (userId == null)
+        //        return BadRequest("Invalad User");
 
-            //Get the Listing entitiy from the srevice 
-            var result = await _listingService.GetAllByCategory(category, userId);
+        //    //Get the Listing entitiy from the srevice 
+        //    var result = await _listingService.GetAllByCity(city, userId);
 
-            // return a 200 response with the ListingVM
-            return Ok(result);
+        //    // return a 200 response with the ListingVM
+        //    return Ok(result);
 
-        }
+        //}
+
+
+        ///// <summary>
+        ///// category controller 
+        ///// </summary>
+        ///// <param name="category"></param>
+        ///// <returns></returns>
+        //[HttpGet("all/{category}")]
+        //public async Task<ActionResult<ListingVM>> GetAllByCategory(string category)
+        //{
+        //    var userId = User.GetId();
+        //    if (userId == null)
+        //        return BadRequest("Invalad User");
+
+        //    //Get the Listing entitiy from the srevice 
+        //    var result = await _listingService.GetAllByCategory(category, userId);
+
+        //    // return a 200 response with the ListingVM
+        //    return Ok(result);
+
+        //}
     }
 }
 

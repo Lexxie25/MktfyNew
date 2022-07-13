@@ -111,18 +111,16 @@ namespace MKTFY.Models.Entities
         /// <summary>
         /// Purchased time seter
         /// </summary>
-        public DateTime Purchase { get; set; }
+        //public DateTime Purchase { get; set; }              ///Taken out havent done a migration yet 
 
         /// <summary>
         /// status for when it becomes Active or Sold
         /// </summary>
 
-        public string Status { get; set; } = String.Empty;
+        //public string Status { get; set; } = String.Empty;
 
-        /// <summary>
-        /// History of the search function 
-        /// </summary>
-        public string[] History = new string[3];
+
+
     }
 }
 
