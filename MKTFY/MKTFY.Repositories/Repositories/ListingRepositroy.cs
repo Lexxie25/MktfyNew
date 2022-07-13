@@ -44,10 +44,10 @@ namespace MKTFY.Repositories.Repositories
         }
 
         // get all the games 
-        public async Task<List<Listing>> GetAll(string userId)
+        public async Task<List<Listing>> GetAll()
         {
             // get all the entities 
-            var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null).OrderByDescending(i => i.Created).ToListAsync();
+            var results = await _context.Listings.ToListAsync();
 
             // return the retrieved entities
             return results;
