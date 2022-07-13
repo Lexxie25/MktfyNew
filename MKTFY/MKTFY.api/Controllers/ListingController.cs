@@ -58,11 +58,9 @@ namespace MKTFY.api.Controllers
         /// Get all Listings 
         /// </summary>
         /// <returns>Get all Listings </returns>
-<<<<<<< HEAD
+
         [HttpGet]  // need to add not by user that is currently logged in userId/// string userId
-=======
-        [HttpGet]  // need to add not by user that is currently logged in userId/// userId string userId
->>>>>>> deals
+
 
         public async Task<ActionResult<List<ListingVM>>> GetAll()
         {
