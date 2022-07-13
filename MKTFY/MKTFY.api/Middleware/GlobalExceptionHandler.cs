@@ -21,7 +21,11 @@ namespace MKTFY.api.Middleware
         {
             _next = next;
         }
-
+        /// <summary>
+        /// Handeling the exceptions through the pipeline steps 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             // call next when ready to contine to next pipeline step 

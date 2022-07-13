@@ -25,6 +25,7 @@ namespace MKTFY.Repositories.Repositories
         {
             //add the created date
             entity.Created = DateTime.UtcNow;
+            entity.Status = "Active";
 
             // perform the add in memory
             _context.Add(entity);
@@ -43,10 +44,10 @@ namespace MKTFY.Repositories.Repositories
         }
 
         // get all the games 
-        public async Task<List<Listing>> GetAll()
+        public async Task<List<Listing>> GetAll(string userId)
         {
             // get all the entities 
-            var results = await _context.Listings.ToListAsync();
+            var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null).OrderByDescending(i => i.Created).ToListAsync();
 
             // return the retrieved entities
             return results;
@@ -74,5 +75,55 @@ namespace MKTFY.Repositories.Repositories
                 .ToListAsync();
             return results;
         }
+
+        // Search  by title and description 
+        public async Task<List<Listing>> Search(string searchString, string userId)//string[] history)
+        {
+
+            var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null && (
+             i.Title.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower()))).OrderByDescending(i => i.Created).ToListAsync();
+            return results;
+
+        }
+
+        // search by city 
+        public async Task<List<Listing>> GetAllByCity(string city, string userId)
+        {
+            var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null &&
+            i.City == city).OrderByDescending(i => i.Created).ToListAsync();
+            return results;
+
+        }
+        // search by category 
+        public async Task<List<Listing>> GetAllByCategory(string category, string userId)
+        {
+            var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null &&
+            i.Category == category).OrderByDescending(i => i.Created).ToListAsync();
+            return results;
+
+        }
+
+        //Purchase 
+        public void Purchase(Listing entity)
+        {
+            entity.Purchase = DateTime.UtcNow;
+
+            _context.Update(entity);
+        }
+
+        // MY LISTINGS ACTIVE AND SOLD 
+        // MY History 
+
+
+
+        // search with all filters
+        //public async Task<List<Listing>>SearchFilter(string searchString, string userId, string city, string condition, string category, decimal price)
+        //{
+        //    var result = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null).ToListAsync();
+        //        switch ("result")
+        //    {
+        //        case "searchSrting": if (searchString != null && i.Title.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower()))))
+
+        //}
     }
 }

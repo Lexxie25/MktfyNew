@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace MKTFY.Models.ViewModels.User
 {
+    /// <summary>
+    /// User Update VM
+    /// </summary>
     public class UserUpdateVM
     {
         /// <summary>

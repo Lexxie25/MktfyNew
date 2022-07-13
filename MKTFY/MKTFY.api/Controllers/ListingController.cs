@@ -9,6 +9,9 @@ using MKTFY.Shared.Exceptions;
 
 namespace MKTFY.api.Controllers
 {
+    /// <summary>
+    /// Listing Controllers 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -16,6 +19,11 @@ namespace MKTFY.api.Controllers
     {
         private readonly IListingService _listingService;
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="listingService"></param>
         public ListingController(IListingService listingService)
         {
             _listingService = listingService;
@@ -56,13 +64,17 @@ namespace MKTFY.api.Controllers
         {
 
             //Get the Listing entitiy from the srevice 
-            var result = await _listingService.GetAll(string userId);
+            var result = await _listingService.GetAll(userId);
 
             // return a 200 response with the ListingVM
             return Ok(result);
 
         }
-        // get a specific Listing By id
+        /// <summary>
+        /// get a specific Listing By id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
 
         public async Task<ActionResult<ListingVM>> Get([FromRoute] Guid id)
@@ -76,7 +88,11 @@ namespace MKTFY.api.Controllers
 
         }
 
-        //update the Listing
+        /// <summary>
+        /// update the Listing
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [HttpPut]
 
         public async Task<ActionResult<ListingVM>> Update([FromBody] ListingUpdateVM data)
@@ -91,7 +107,11 @@ namespace MKTFY.api.Controllers
         }
 
 
-        // delete a listing 
+        /// <summary>
+        /// delete a listing 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
 
         public async Task<ActionResult> Delete([FromRoute] Guid id)
@@ -104,11 +124,84 @@ namespace MKTFY.api.Controllers
 
         }
 
+        /// <summary>
+        /// Search string 
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
+        [HttpGet("search/{searhString}")]
+        public async Task<ActionResult<List<ListingVM>>> Search(string searchString)
+        {
+            var userId = User.GetId();
+            if (userId == null)
+                return BadRequest("Invalid user");
+
+            var results = await _listingService.Search(searchString, userId);
+            return Ok(results);
+        }
+
+        /// <summary>
+        /// when purchesed listing is actavated will asing the user id tha tis logged into the buyer id 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPut("purchase")]
+        public async Task<ActionResult<ListingVM>> Purchase([FromBody] ListingPurchaseVM data)
+        {
+            var buyerId = User.GetId();
+            if (buyerId == null)
+                return BadRequest("Invalad User");
+
+            // Update the Listing 
+            var result = await _listingService.Purchase(data, buyerId);
+            return Ok(result);
+        }
+
+
+        /// <summary>
+        /// city controller 
+        /// </summary>
+        /// <param name="city"></param>
+        /// <returns></returns>
+        [HttpGet("all/{city}")]
+        public async Task<ActionResult<ListingVM>> GetAllByCity(string city)
+        {
+            var userId = User.GetId();
+            if (userId == null)
+                return BadRequest("Invalad User");
+
+            //Get the Listing entitiy from the srevice 
+            var result = await _listingService.GetAllByCity(city, userId);
+
+            // return a 200 response with the ListingVM
+            return Ok(result);
+
+        }
+
+
+        /// <summary>
+        /// category controller 
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        [HttpGet("all/{category}")]
+        public async Task<ActionResult<ListingVM>> GetAllByCategory(string category)
+        {
+            var userId = User.GetId();
+            if (userId == null)
+                return BadRequest("Invalad User");
+
+            //Get the Listing entitiy from the srevice 
+            var result = await _listingService.GetAllByCategory(category, userId);
+
+            // return a 200 response with the ListingVM
+            return Ok(result);
+
+        }
     }
 }
-// Get listing all {city} filters all listings by city and not by user 
-//Get listing all {category} filters all listing by category and not by user 
-// Get Listing search/{searchstring} name and description fields nor user
-// get listing/Filter/ for searching with city andor catefory  or search with no filters not user 
-// get listing/deals 16 listings from lowest price to highest price and not from user
-// put listing purchase making a listing that will set the user id as a buyers id and update the database 
+
+
+
+// get listing/Filter/ for searching with city andor category  or search with no filters not user 
+

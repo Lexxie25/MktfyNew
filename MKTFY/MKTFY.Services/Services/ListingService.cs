@@ -39,7 +39,7 @@ namespace MKTFY.Services.Services
         public async Task<List<ListingVM>> GetAll(string userId)
         {
             // get the listing entities from the repository 
-            var results = await _uow.Listings.GetAll(string userId);
+            var results = await _uow.Listings.GetAll(userId);
 
             //Build the ListingVM viwe models to return to the client 
             var models = results.Select(listing => new ListingVM(listing)).ToList();
@@ -94,6 +94,63 @@ namespace MKTFY.Services.Services
             _uow.Listings.Delete(entity);
             await _uow.SaveAsync();
         }
+
+        //Search doesnt show user 
+
+        public async Task<List<ListingVM>> Search(string searchString, string userId)
+        {
+            //get the existing entity and search
+            var results = await _uow.Listings.Search(searchString, userId);
+
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            return models;
+        }
+
+        // search by city doesnt show user 
+
+        public async Task<List<ListingVM>> GetAllByCity(string city, string userId)
+        {
+            //get the existing entites by city 
+            var results = await _uow.Listings.GetAllByCity(city, userId);
+
+            //Build the ListingVM viwe models to return to the client 
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
+
+            // return the listingVMs
+            return models;
+        }
+
+        //search by catagory doesnt show user 
+        public async Task<List<ListingVM>> GetAllByCategory(string category, string userId)
+        {
+            //get the existing entites by city 
+            var results = await _uow.Listings.GetAllByCity(category, userId);
+
+            //Build the ListingVM viwe models to return to the client 
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
+
+            // return the listingVMs
+            return models;
+        }
+
+        //search with filtering catgory price city condition doesnt show user  
+
+
+
+        // Purchase 
+        public async Task<ListingVM> Purchase(ListingPurchaseVM src, string buyerId)
+        {
+            var entity = await _uow.Listings.GetById(src.Id);
+
+            entity.BuyerId = buyerId;
+
+            _uow.Listings.Purchase(entity);
+            await _uow.SaveAsync();
+
+            var models = new ListingVM(entity);
+            return models;
+        }
+
 
         //deals 
 

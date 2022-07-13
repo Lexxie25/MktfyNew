@@ -3,9 +3,16 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace MKTFY.api.Swashbuckle
-{
+{/// <summary>
+/// atho hearder infrmation for swagger
+/// </summary>
     public class AuthHeaderOperationFilter : IOperationFilter
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="operation"></param>
+        /// <param name="context"></param>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             //only Authorize the endpoint if it has an Authorize attrubute

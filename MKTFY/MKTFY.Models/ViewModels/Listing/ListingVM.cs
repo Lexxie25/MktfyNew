@@ -34,6 +34,7 @@ namespace MKTFY.Models.ViewModels.Listing
             Condition = src.Condition;
             Category = src.Category;
             UserId = src.UserId;
+            BuyerId = src.BuyerId;
 
         }
 
@@ -86,6 +87,12 @@ namespace MKTFY.Models.ViewModels.Listing
         /// Pulls from the user Id as they have to be logged in to make a listing 
         /// </summary>
         public string UserId { get; set; }
+
+        /// <summary>
+        /// Buyer Id when the listing is purchased otherwize empty string 
+        /// </summary>
+        public string BuyerId { get; set; } = String.Empty;
+
 
     }
 }

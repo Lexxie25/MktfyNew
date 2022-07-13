@@ -59,5 +59,10 @@ namespace MKTFY.Models.ViewModels.Listing
         /// </summary>
         [Required]
         public string Category { get; set; } = String.Empty;
+
+        /// <summary>
+        /// Buyer Id when the listing is purchased otherwize empty string 
+        /// </summary>
+        public string BuyerId { get; set; } = String.Empty;
     }
 }

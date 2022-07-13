@@ -6,20 +6,29 @@ using MKTFY.Models.ViewModels.User;
 using MKTFY.Services.Services.Interfaces;
 
 namespace MKTFY.api.Controllers
-{
+{/// <summary>
+/// 
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userService"></param>
         public UserController(IUserService userService)
         {
             _userService = userService;
         }
 
-        //create a new user/        /api/user this is the Postman route 
+        /// <summary>
+        /// create a new user       
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<UserVM>> Create([FromBody] UserAddVM data)
         {
@@ -31,7 +40,11 @@ namespace MKTFY.api.Controllers
             return Ok(result);
 
         }
-        //get a specific user by Id
+        /// <summary>
+        /// get a specific user by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<UserVM>> Get([FromRoute] string id)
         {
@@ -43,7 +56,11 @@ namespace MKTFY.api.Controllers
             return Ok(result);
 
         }
-        //Update a user
+        /// <summary>
+        /// Update a user
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ActionResult<UserVM>> Update([FromBody] UserUpdateVM data)
         {
