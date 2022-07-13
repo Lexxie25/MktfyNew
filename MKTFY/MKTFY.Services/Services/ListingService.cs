@@ -36,10 +36,10 @@ namespace MKTFY.Services.Services
 
 
         }
-        public async Task<List<ListingVM>> GetAll(string userId)
+        public async Task<List<ListingVM>> GetAll()//string userId
         {
             // get the listing entities from the repository 
-            var results = await _uow.Listings.GetAll(userId);
+            var results = await _uow.Listings.GetAll();//userId
 
             //Build the ListingVM viwe models to return to the client 
             var models = results.Select(listing => new ListingVM(listing)).ToList();

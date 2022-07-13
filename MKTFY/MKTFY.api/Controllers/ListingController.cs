@@ -58,13 +58,13 @@ namespace MKTFY.api.Controllers
         /// Get all Listings 
         /// </summary>
         /// <returns>Get all Listings </returns>
-        [HttpGet]  // need to add not by user that is currently logged in 
+        [HttpGet]  // need to add not by user that is currently logged in userId/// string userId
 
-        public async Task<ActionResult<List<ListingVM>>> GetAll(string userId)
+        public async Task<ActionResult<List<ListingVM>>> GetAll()
         {
 
             //Get the Listing entitiy from the srevice 
-            var result = await _listingService.GetAll(userId);
+            var result = await _listingService.GetAll();
 
             // return a 200 response with the ListingVM
             return Ok(result);

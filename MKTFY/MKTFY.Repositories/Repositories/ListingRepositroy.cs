@@ -43,7 +43,7 @@ namespace MKTFY.Repositories.Repositories
             return result;
         }
 
-        // get all the games 
+        // get all the games .Where(i => i.UserId != userId && i.BuyerId == null).OrderByDescending(i => i.Created).
         public async Task<List<Listing>> GetAll()
         {
             // get all the entities 

@@ -13,7 +13,7 @@ namespace MKTFY.Services.Services.Interfaces
 
         Task<ListingVM> GetById(Guid id);        // get a single listing by id
 
-        Task<List<ListingVM>> GetAll(string userId);         // get all of the listings
+        Task<List<ListingVM>> GetAll();         // get all of the listings string userId
 
         Task<ListingVM> Update(ListingUpdateVM src); // Update an existing Lising 
 
