@@ -1,4 +1,5 @@
-﻿using MKTFY.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MKTFY.Models.Entities;
 using MKTFY.Models.ViewModels.Listing;
 using MKTFY.Repositories;
 using MKTFY.Services.Services.Interfaces;
@@ -18,7 +19,8 @@ namespace MKTFY.Services.Services
         {
             _uow = uow;
         }
-        //  
+        //creating a new listing 
+        //entity.Status = "Active";  move this to Service layer ? 
         public async Task<ListingVM> Create(ListingAddVM src, string userId)
         {
             //creating a new listing entity 
@@ -36,10 +38,12 @@ namespace MKTFY.Services.Services
 
 
         }
-        public async Task<List<ListingVM>> GetAll()//string userId
+
+        // GET ALL --- Move this to Service layer logic  the Listings string userId .Where(i => i.UserId ! = userId && i.BuyerId == null).OrderByDescending(i => i.Created).
+        public async Task<List<ListingVM>> GetAll()
         {
             // get the listing entities from the repository 
-            var results = await _uow.Listings.GetAll();//userId
+            var results = await _uow.Listings.GetAll(items => items.Include(listing => listing.User));
 
             //Build the ListingVM view models to return to the client 
             var models = results.Select(listing => new ListingVM(listing)).ToList();
@@ -95,11 +99,8 @@ namespace MKTFY.Services.Services
             await _uow.SaveAsync();
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////Need to add logic to these before I can inplement them logic is in repository layer it should not
-
-        ////Search doesnt show user 
-
+        /////////////////////////////////////////////////////////////////////////////////Search String  doesnt show user 
+        //Service Logic 
         //public async Task<List<ListingVM>> Search(string searchString, string userId)
         //{
         //    //get the existing entity and search
@@ -108,9 +109,25 @@ namespace MKTFY.Services.Services
         //    var models = results.Select(listing => new ListingVM(listing)).ToList();
         //    return models;
         //}
+        //Repo Logic 
+        //public async Task<List<Listing>> Search(string searchString, string userId)//string[] history)
+        //{
 
-        //// search by city doesnt show user 
+        //    var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null && (
+        //     i.Title.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower()))).OrderByDescending(i => i.Created).ToListAsync();
+        //    return results;
 
+        //}
+
+        ////////////////////////////////////////////////////////////// search by city 
+        //Service logic
+        //public async Task<List<Listing>> GetAllByCity(string city, string userId)
+        //{
+        //    var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null &&
+        //    i.City == city).OrderByDescending(i => i.Created).ToListAsync();
+        //    return results;
+
+        //Repo Logic
         //public async Task<List<ListingVM>> GetAllByCity(string city, string userId)
         //{
         //    //get the existing entites by city 
@@ -123,6 +140,16 @@ namespace MKTFY.Services.Services
         //    return models;
         //}
 
+        ///////////////////////////////////////////////////////search by category 
+        //service logic
+        //public async Task<List<Listing>> GetAllByCategory(string category, string userId)
+        //{
+        //    var results = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null &&
+        //    i.Category == category).OrderByDescending(i => i.Created).ToListAsync();
+        //    return results;
+
+        //}
+        //Repo logic
         ////search by catagory doesnt show user 
         //public async Task<List<ListingVM>> GetAllByCategory(string category, string userId)
         //{
@@ -136,12 +163,20 @@ namespace MKTFY.Services.Services
         //    return models;
         //}
 
-        ////search with filtering catgory price city condition doesnt show user  
+        ////////////////////////////////////////////////////////////////////////////Search with All filtering catgory price city condition doesnt show user  
+
+        //public async Task<List<Listing>>SearchFilter(string searchString, string userId, string city, string condition, string category, decimal price)
+        //{
+        //    var result = await _context.Listings.Where(i => i.UserId != userId && i.BuyerId == null).ToListAsync();
+        //        switch ("result")
+        //    {
+        //        case "searchSrting": if (searchString != null && i.Title.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower()))))
+
+        //}
 
 
-
-        //taken out for now did not do a migration yet throwing errors 
-        //// Purchase 
+        ////////////////////////////////////////////////////////////////////// Purchase 
+        //Repo logic 
         //public async Task<ListingVM> Purchase(ListingPurchaseVM src, string buyerId)
         //{
         //    var entity = await _uow.Listings.GetById(src.Id);
@@ -154,15 +189,38 @@ namespace MKTFY.Services.Services
         //    var models = new ListingVM(entity);
         //    return models;
         //}
+        //Service Logic 
+        //public void Purchase(Listing entity)
+        //{
+        //    entity.Purchase = DateTime.UtcNow;
+
+        //    _context.Update(entity);
+        //}
+        // MY LISTINGS ACTIVE AND SOLD 
+        // MY History 
 
 
-        ////deals 
 
+        ////////////////////////////////////////////////////////////////////////Deals 
+        //need to make a user spot for a list of history that saves Listing Id ect to make up the logic for this 
+        //Logic from service
         //public async Task<List<ListingVM>> Deals(string userId)
         //{
         //    var results = await _uow.Listings.Deals(userId);
         //    var models = results.Select(listing => new ListingVM(listing)).ToList();
         //    return models;
         //}
+        ////Logic from Repository 
+        //public async Task<List<Listing>> Deals(string userId)
+        //{
+        //    var results = await _context.Listings.Where(i => i.UserId != userId).OrderBy(i => i.Price).Take(16)
+        //        .ToListAsync();
+        //    return results;
+        //}
+
+
+
     }
+
+
 }

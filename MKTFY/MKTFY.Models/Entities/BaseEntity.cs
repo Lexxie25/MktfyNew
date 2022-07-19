@@ -6,17 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MKTFY.Models.Entities
-{
-    /// <summary>
-    /// Entity for tracking uploaded files
-    /// </summary>
-    public class Upload : BaseEntity<Guid>
+{/// <summary>
+/// Generaic base entity 
+/// </summary>
+/// <typeparam name="TId"></typeparam>
+    public class BaseEntity<TId>
     {
 
         /// <summary>
-        /// Url of the file on s3
+        /// Generic ID param 
         /// </summary>
-        [Required]
-        public string Url { get; set; } = String.Empty;
+        [Key]
+        public TId Id { get; set; }
     }
 }

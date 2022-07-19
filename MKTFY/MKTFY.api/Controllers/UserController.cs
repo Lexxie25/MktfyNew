@@ -28,7 +28,10 @@ namespace MKTFY.api.Controllers
         /// create a new user       
         /// </summary>
         /// <param name="data"></param>
-        /// <returns></returns>
+        /// <returns>Creates a new user </returns>
+        /// <response code = "200">Created A User</response>
+        /// <response code = "401">Not Currently Logged in</response>
+        /// <response code = "500">Database issue</response>
         [HttpPost]
         public async Task<ActionResult<UserVM>> Create([FromBody] UserAddVM data)
         {
@@ -44,7 +47,10 @@ namespace MKTFY.api.Controllers
         /// get a specific user by Id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>get a specific User by Id </returns>
+        /// <response code = "200">Gets User by ID</response>
+        /// <response code = "401">Not Currently Logged in</response>
+        /// <response code = "500">Database issue</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<UserVM>> Get([FromRoute] string id)
         {
@@ -60,7 +66,10 @@ namespace MKTFY.api.Controllers
         /// Update a user
         /// </summary>
         /// <param name="data"></param>
-        /// <returns></returns>
+        /// <returns>Updates a user info not Email</returns>
+        /// <response code = "200">Updates a user </response>
+        /// <response code = "401">Not Currently Logged in</response>
+        /// <response code = "500">Database issue</response>
         [HttpPut]
         public async Task<ActionResult<UserVM>> Update([FromBody] UserUpdateVM data)
         {

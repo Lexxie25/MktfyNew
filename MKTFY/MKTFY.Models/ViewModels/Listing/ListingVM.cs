@@ -35,6 +35,7 @@ namespace MKTFY.Models.ViewModels.Listing
             Category = src.Category;
             UserId = src.UserId;
             BuyerId = src.BuyerId;
+            UserFullName = src.User == null ? null : src.User.FirstName + " " + src.User.LastName;
 
         }
 
@@ -87,11 +88,15 @@ namespace MKTFY.Models.ViewModels.Listing
         /// Pulls from the user Id as they have to be logged in to make a listing 
         /// </summary>
         public string UserId { get; set; }
+        /// <summary>
+        /// Getting the full name from users table with lamda function
+        /// </summary>
+        public string? UserFullName { get; set; }
 
         /// <summary>
         /// Buyer Id when the listing is purchased otherwize empty string 
         /// </summary>
-        public string BuyerId { get; set; } = String.Empty;
+        public string? BuyerId { get; set; }
 
 
     }

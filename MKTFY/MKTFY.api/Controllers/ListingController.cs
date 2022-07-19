@@ -58,6 +58,9 @@ namespace MKTFY.api.Controllers
         /// Get all Listings 
         /// </summary>
         /// <returns>Get all Listings </returns>
+        /// <response code = "200">Created A Listing</response>
+        /// <response code = "401">Not Currently Logged in</response>
+        /// <response code = "500">Database issue</response>
 
         [HttpGet]  // need to add not by user that is currently logged in userId/// string userId
 
@@ -77,6 +80,9 @@ namespace MKTFY.api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code = "200">getting A Listing by ID</response>
+        /// <response code = "401">Not Currently Logged in</response>
+        /// <response code = "500">Database issue</response>
         [HttpGet("{id}")]
 
         public async Task<ActionResult<ListingVM>> Get([FromRoute] Guid id)
@@ -95,6 +101,9 @@ namespace MKTFY.api.Controllers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        /// <response code = "200">Updated A Listing</response>
+        /// <response code = "401">Not Currently Logged in</response>
+        /// <response code = "500">Database issue</response>
         [HttpPut]
 
         public async Task<ActionResult<ListingVM>> Update([FromBody] ListingUpdateVM data)
@@ -114,6 +123,9 @@ namespace MKTFY.api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <response code = "200">Deleted A Listing</response>
+        /// <response code = "401">Not Currently Logged in</response>
+        /// <response code = "500">Database issue</response>
         [HttpDelete("{id}")]
 
         public async Task<ActionResult> Delete([FromRoute] Guid id)

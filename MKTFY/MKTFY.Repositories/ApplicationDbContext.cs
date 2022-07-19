@@ -23,6 +23,7 @@ namespace MKTFY.Repositories
         public DbSet<Listing> Listings => Set<Listing>();
         public DbSet<User> Users => Set<User>();
         public DbSet<Upload> Uploads => Set<Upload>();
+        public DbSet<Faq> Faq => Set<Faq>();
 
 
     }

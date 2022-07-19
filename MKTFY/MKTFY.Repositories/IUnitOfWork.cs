@@ -13,6 +13,7 @@ namespace MKTFY.Repositories
         IListingRepository Listings { get; }
         IUserRepository Users { get; }
         IUploadRepository Uploads { get; }
+        IFaqRepository Faq { get; }
 
         // save method
         Task SaveAsync();

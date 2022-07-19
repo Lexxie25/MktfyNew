@@ -12,7 +12,7 @@ namespace MKTFY.Models.Entities
     /// <summary>
     /// User entity 
     /// </summary>
-    public class User
+    public class User : BaseEntity<string>
     {
         /// <summary>
         /// Default constructor to allow creation of an empty entity
@@ -47,12 +47,6 @@ namespace MKTFY.Models.Entities
 
 
         }
-        /// <summary>
-        /// Id set from Auth0
-        /// </summary>
-        [Required]
-        [Key]
-        public string Id { get; set; } = String.Empty;
 
         /// <summary>
         /// First name

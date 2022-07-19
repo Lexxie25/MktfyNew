@@ -29,7 +29,10 @@ namespace MKTFY.api.Controllers
         /// <summary>
         /// Upload 1 or more Files 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Uploads Listing to AWS </returns>
+        /// <response code = "200">Uploaded</response>
+        /// <response code = "401">Not Currently Logged in</response>
+        /// <response code = "500">Database issue</response>
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<List<UploadResultVM>>> UploadImage()

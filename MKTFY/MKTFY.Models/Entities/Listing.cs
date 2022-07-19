@@ -1,4 +1,5 @@
-﻿using MKTFY.Models.ViewModels.Listing;
+﻿using MKTFY.Models.Entities.Interfaces;
+using MKTFY.Models.ViewModels.Listing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +12,7 @@ namespace MKTFY.Models.Entities
     /// <summary>
     /// Listing Entity
     /// </summary>
-    public class Listing
+    public class Listing : BaseEntity<Guid>, IDated
     {
         /// <summary>
         /// Default constructor to allow creation of an empty entity
@@ -39,11 +40,7 @@ namespace MKTFY.Models.Entities
 
 
         }
-        /// <summary>
-        /// Guid ID
-        /// </summary>
-        [Key]
-        public Guid Id { get; set; }
+
 
         /// <summary>
         /// Title of Listing

@@ -51,6 +51,20 @@ namespace MKTFY.Repositories
             }
         }
 
+
+        private IFaqRepository _faqRepository;
+
+        public IFaqRepository Faq
+        {
+            get
+            {
+                if (_faqRepository == null)
+                    _faqRepository = new FaqRepository(_context);
+
+                return _faqRepository;
+            }
+        }
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public UnitOfWork(ApplicationDbContext context)
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

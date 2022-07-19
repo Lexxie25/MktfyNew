@@ -1,4 +1,5 @@
 ﻿using MKTFY.Models.Entities;
+using MKTFY.Models.ViewModels.FAQ;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace MKTFY.Repositories.Repositories.Interfaces
 {
-    public interface IListingRepository : IBaseRepository<Listing, Guid>
+    public interface IFaqRepository : IBaseRepository<Faq, Guid>
     {
-
-        //void Purchase(Listing entity);//taken out for now did not do a migration yet throwing errors 
 
     }
 }

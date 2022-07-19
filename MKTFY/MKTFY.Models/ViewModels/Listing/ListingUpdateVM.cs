@@ -63,6 +63,6 @@ namespace MKTFY.Models.ViewModels.Listing
         /// <summary>
         /// Buyer Id when the listing is purchased otherwize empty string 
         /// </summary>
-        public string BuyerId { get; set; } = String.Empty;
+        public string? BuyerId { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MKTFY.Models.Entities;
+﻿using MKTFY.Models.Entities;
 using MKTFY.Repositories.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,13 +8,10 @@ using System.Threading.Tasks;
 
 namespace MKTFY.Repositories.Repositories
 {
-    public class UserRepository : BaseRepository<User, string, ApplicationDbContext>, IUserRepository
+    public class FaqRepository : BaseRepository<Faq, Guid, ApplicationDbContext>, IFaqRepository
     {
-
-        public UserRepository(ApplicationDbContext context)
+        public FaqRepository(ApplicationDbContext context)
             : base(context)
-        {
-        }
-
+        { }
     }
 }
